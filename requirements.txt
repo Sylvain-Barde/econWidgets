@@ -1,0 +1,9 @@
+ipywidgets
+numpy
+pandas
+matplotlib==3.*
+IPython
+notebook
+jupyter_contrib_nbextensions
+nbconvert
+scipy
