@@ -2668,7 +2668,8 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
 
         # Normalise if required, get bounds
         if Normalise is True:
-            shockRounds /=  X    
+            shockRounds /= X
+            shockRoundsCum /= sum(X)
 
         yMax = 1.2*max(shockRounds.flatten())        
         yMin = 1.2*min(shockRounds.flatten())
@@ -2691,10 +2692,16 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
                 ax.set_ylim(top = yMax, bottom = 0)
                 loc = 'upper right'
                 ax.tick_params(labelsize=20)
+                xLabelYPos = -0.05
+                yAxisArrowPos = 1
+                yAxisArrow = "^k"
             elif shockSign == 'Negative':
                 ax.set_ylim(top = 0, bottom = yMin)
                 loc = 'lower right'
                 ax.tick_params(labelsize=20,labelbottom=False,labeltop=True)
+                xLabelYPos = 1.075
+                yAxisArrowPos = 0
+                yAxisArrow = "vk"
 
             ax.set_xlim(right = NumRounds, left = 0)
             ax.legend(loc=loc, frameon=False,prop={'size':20})
@@ -2702,11 +2709,12 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
             ax.spines['top'].set_visible(False)
             ax.spines['left'].set_position('zero')
             ax.spines['right'].set_visible(False)
-            ax.set_xlabel('Rounds', fontdict = {'fontsize': 25},position=(1, 0))
-            ax.set_ylabel('Impact', fontdict = {'fontsize': 25},position=(0, 1),
-                          rotation=0)
+            ax.set_xlabel('Rounds', fontdict = {'fontsize': 25})
+            ax.xaxis.set_label_coords(0.5, xLabelYPos)
+            ax.set_ylabel('Impact', fontdict = {'fontsize': 25})
+            
             ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
-            ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
+            ax.plot(0, yAxisArrowPos, yAxisArrow, transform=ax.get_xaxis_transform(), clip_on=False)
 
 
         elif plotType == 'Cumulative shocks':
@@ -2738,13 +2746,19 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
                 legLoc = 'upper center'
                 annotLoc1 = 1
                 annotLoc2 = 0.90
-                ax.tick_params(labelsize=20)
+                ax.tick_params(labelsize=20,labelbottom=True,labeltop=False)
+                xLabelYPos = -0.05
+                yAxisArrowPos = 1
+                yAxisArrow = "^k"
             elif shockSign == 'Negative':
                 ax.set_ylim(top = 0, bottom = yMaxCum)
                 legLoc = 'lower center'
                 annotLoc1 = 0
                 annotLoc2 = 0.05                
                 ax.tick_params(labelsize=20,labelbottom=False,labeltop=True)
+                xLabelYPos = 1.075
+                yAxisArrowPos = 0
+                yAxisArrow = "vk"
 
             ax.annotate(coverStr,[0,annotLoc1], xytext = [0.05,annotLoc2], 
                         xycoords ='axes fraction', fontsize = 25, clip_on = True)
@@ -2755,11 +2769,14 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
             ax.spines['bottom'].set_position('zero')
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
-            ax.set_xlabel('Rounds', fontdict = {'fontsize': 25},
-                          position=(1.05, 0.05))
-            ax.set_ylabel('Cumulative Impact', fontdict = {'fontsize': 25},
-                          position=(0, 1), rotation=0)
-            ax.tick_params(labelsize=20,labelbottom=False,labeltop=True)
+            ax.set_xlabel('Rounds', fontdict = {'fontsize': 25})
+            ax.xaxis.set_label_coords(0.5, xLabelYPos)
+            ax.set_ylabel('Cumulative Impact', fontdict = {'fontsize': 25})
+
+            ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
+            ax.plot(-0.5, yAxisArrowPos, yAxisArrow, transform=ax.get_xaxis_transform(), clip_on=False)
+
+
 
         plt.tight_layout()
     

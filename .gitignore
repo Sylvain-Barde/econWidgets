@@ -9,6 +9,9 @@ __pycache__/
 # Batchfiles for launching notebooks
 *.bat
 
+# Images produced for webpage
+assets/img
+
 # Distribution / packaging
 .Python
 build/
