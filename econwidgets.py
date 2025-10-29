@@ -2895,10 +2895,12 @@ def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, a_d_in
                     label='Selection')
         ax[1].plot([0,Qval],[TRval,TRval],'k--',linewidth=1)
         ax[1].plot([Qval,Qval],[0,TRval],'k--',linewidth=1)
-        ax[1].annotate(r'$Q={:.2f}$'.format(Qval),[Qval,0], xytext = [Qval+0.15,0.25],
-                    xycoords ='data', fontsize = 25, clip_on = True)
-        ax[1].annotate(r'$TR={:.2f}$'.format(TRval),[0,TRval], xytext = [0.15,TRval+0.25],
-                    xycoords ='data', fontsize = 25, clip_on = True)
+        ax[1].annotate(r'$Q={:.2f}$'.format(Qval),[Qval,0], 
+                       xytext = [Qval+0.15,0.25],
+                       xycoords ='data', fontsize = 25, clip_on = True)
+        ax[1].annotate(r'$TR={:.2f}$'.format(TRval),[0,TRval], 
+                       xytext = [0.15,TRval+0.25],
+                       xycoords ='data', fontsize = 25, clip_on = True)
 
         # Add legend and format axes to look nice
         ax[1].legend(loc='upper center', frameon=False,prop={'size':20})
@@ -2908,9 +2910,12 @@ def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, a_d_in
         ax[1].spines['top'].set_visible(False)
         ax[1].spines['right'].set_visible(False)
         ax[1].set_xlabel(r'$Q$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax[1].set_ylabel(r'$TR$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
-        ax[1].plot(1, 0, ">k", transform=ax[1].get_yaxis_transform(), clip_on=False)
-        ax[1].plot(0, 1, "^k", transform=ax[1].get_xaxis_transform(), clip_on=False)
+        ax[1].set_ylabel(r'$TR$', fontdict = {'fontsize': 25},position=(0, 1), 
+                         rotation=0)
+        ax[1].plot(1, 0, ">k", transform=ax[1].get_yaxis_transform(), 
+                   clip_on=False)
+        ax[1].plot(0, 1, "^k", transform=ax[1].get_xaxis_transform(), 
+                   clip_on=False)
         ax[1].tick_params(labelsize=20)  
 
         plt.tight_layout()
@@ -2930,8 +2935,9 @@ def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, a_d_in
     display(output)    
     
     
-def compound_interest_widget(xMin_init = 0, xMax_init = 1.1, yMin_init = 0, yMax_init = 3, 
-                  numTermsStr_init = '1', expFlag_init = False):
+def compound_interest_widget(xMin_init = 0, xMax_init = 1.1, yMin_init = 0, 
+                             yMax_init = 3, numTermsStr_init = '1', 
+                             expFlag_init = False):
     
     # Declare widgets for interactive input
     xMin_slider = widgets.FloatSlider(min=0,
@@ -3000,21 +3006,23 @@ def compound_interest_widget(xMin_init = 0, xMax_init = 1.1, yMin_init = 0, yMax
                     else:
                         termLabel = None
                     ax.scatter(T+step, K*rate, s=mrkrSize, c=col, alpha=0.6)
-                    ax.plot([T,T+step], [K,K], col, linewidth=2, alpha=0.6, label=termLabel)
-                    ax.plot([T+step,T+step], [0,K*rate], col+'--', linewidth=2, alpha=0.6)
+                    ax.plot([T,T+step], [K,K], col, linewidth=2, alpha=0.6, 
+                            label=termLabel)
+                    ax.plot([T+step,T+step], [0,K*rate], col+'--', linewidth=2,
+                            alpha=0.6)
                     T+=step
                     K*=rate
 
                 ax.plot([0,T],[K,K],col+'--',linewidth=1)
                 ax.annotate(r'Final value = ${:.4f}$'.format(K),[0,K], 
-                            xytext = [0.05,K+0.1], xycoords ='data', fontsize = 25, 
-                            clip_on = True)
+                            xytext = [0.05,K+0.1], xycoords ='data', 
+                            fontsize = 25, clip_on = True)
 
         # Plot the exponential if requested
         if expFlag is True:
             x = np.arange(0,1,1/500)
             y = np.exp(x)
-            ax.plot(x, y,'k', linewidth=2, label=r'$\quad y = a^x$')
+            ax.plot(x, y,'k', linewidth=2, label=r'$\quad y = e^x$')
 
         # Add legend and format axes to look nice
         ax.legend(loc='lower center', frameon=False,prop={'size':20},ncol=6,
@@ -3028,19 +3036,20 @@ def compound_interest_widget(xMin_init = 0, xMax_init = 1.1, yMin_init = 0, yMax
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$T$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$Assets$', fontdict = {'fontsize': 25},
-                      position=(0, 1.05), rotation=0)
+        ax.set_ylabel(r'Asset value', fontdict = {'fontsize': 25},
+                      position=(0, 1.05), rotation=90)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
         plt.tight_layout()
     
-    out = widgets.interactive_output(compound_interest_plot, {'xMin': xMin_slider,
-                                                            'xMax': xMax_slider,
-                                                            'yMin': yMin_slider,
-                                                            'yMax': yMax_slider,
-                                                            'numTermsStr': numTermsStr_text,
-                                                            'expFlag' : expFlag_check})
+    out = widgets.interactive_output(
+                        compound_interest_plot, {'xMin': xMin_slider,
+                                                 'xMax': xMax_slider,
+                                                 'yMin': yMin_slider,
+                                                 'yMax': yMax_slider,
+                                                 'numTermsStr': numTermsStr_text,
+                                                 'expFlag' : expFlag_check})
 
     output = widgets.VBox([out,
                   widgets.HBox([xMin_slider,
@@ -3051,7 +3060,8 @@ def compound_interest_widget(xMin_init = 0, xMax_init = 1.1, yMin_init = 0, yMax
                                 expFlag_check])])
     display(output)  
     
-def log_demand_widget(Pmax_init = 15,Qmax_init = 10, Pval1_init = 5, Pval2_init = 5, a_d_init = 0.8, b_d_init = 1.5):
+def log_demand_widget(Pmax_init = 15,Qmax_init = 10, Pval1_init = 5, 
+                      Pval2_init = 5, a_d_init = 0.8, b_d_init = 1.5):
 
     # Declare widgets for interactive input
     Qmax_slider = widgets.IntSlider(min= 5,
