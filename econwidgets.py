@@ -21,8 +21,9 @@ from IPython.display import display, HTML
 #------------------------------------------------------------------------------
 # Mathematics widgets
 
-def linear_widget(xMax_init = 15, yMax_init = 15, a_init = 2, b_init = -4, Aflag_init = True, 
-                  xA_init = 4, yA_init = 7, Bflag_init = False, xB_init = 10, yB_init = 10, 
+def linear_widget(xMax_init = 15, yMax_init = 15, a_init = 2, b_init = -4, 
+                  Aflag_init = True, xA_init = 4, yA_init = 7, 
+                  Bflag_init = False, xB_init = 10, yB_init = 10, 
                   eqFlag1_init = True, eqFlag2_init = False):
     
     # Declare widgets for interactive input
@@ -88,7 +89,8 @@ def linear_widget(xMax_init = 15, yMax_init = 15, a_init = 2, b_init = -4, Aflag
     # Link widgets as required
     widgets.jslink((xMax_slider,'value'),(yMax_slider,'value'))
 
-    def linear_plot(xMax, yMax, a, b, Aflag, xA, yA, Bflag, xB, yB, eqFlag1, eqFlag2):
+    def linear_plot(xMax, yMax, a, b, Aflag, xA, yA, Bflag, xB, yB, eqFlag1, 
+                    eqFlag2):
 
         # create an 'x' vector, calculate 'y' vector
         x = np.arange(-xMax,xMax)
@@ -101,7 +103,8 @@ def linear_widget(xMax_init = 15, yMax_init = 15, a_init = 2, b_init = -4, Aflag
         # Create figure, plot linear linear_function
         fig, ax = plt.subplots(figsize=(20,10))
         ax.plot(x, y,'b', linewidth=2, alpha=0.6,
-                    label=r'$\quad y = {:.2f} x {:s} {:.2f}$'.format(a,sig,abs(b)))
+                    label=r'$\quad y = {:.2f} x {:s} {:.2f}$'.format(
+                        a,sig,abs(b)))
 
         # Add markers for the points if requested
         mrkrSize = 2*rcParams['lines.markersize'] ** 2
@@ -158,7 +161,8 @@ def linear_widget(xMax_init = 15, yMax_init = 15, a_init = 2, b_init = -4, Aflag
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -193,8 +197,8 @@ def linear_widget(xMax_init = 15, yMax_init = 15, a_init = 2, b_init = -4, Aflag
     display(output)
     
     
-def system_widget(xMax_init = 15, yMax_init = 15, a_init = 3, b_init = -4, c_init = -7, 
-                  d_init = -2, e_init = 6, f_init = 8):
+def system_widget(xMax_init = 15, yMax_init = 15, a_init = 3, b_init = -4, 
+                  c_init = -7, d_init = -2, e_init = 6, f_init = 8):
     
     # Declare widgets for interactive input
     xMax_slider = widgets.IntSlider(min=5,
@@ -318,7 +322,8 @@ def system_widget(xMax_init = 15, yMax_init = 15, a_init = 3, b_init = -4, c_ini
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -344,9 +349,10 @@ def system_widget(xMax_init = 15, yMax_init = 15, a_init = 3, b_init = -4, c_ini
                                 f_slider])])
     display(output)
     
-def quadratic_widget(xMax_init = 15, yMax_init = 15, a_init = 1, b_init = 0, c_init = 0, 
-                     a2_init = 1, b2_init = 0, c2_init = 0, 
-                  altFlag_init = False, rootFlag_init = False, maxFlag_init = False):
+def quadratic_widget(xMax_init = 15, yMax_init = 15, a_init = 1, b_init = 0,
+                     c_init = 0, a2_init = 1, b2_init = 0, c2_init = 0, 
+                     altFlag_init = False, rootFlag_init = False, 
+                     maxFlag_init = False):
     
     # Declare widgets for interactive input
     xMax_slider = widgets.IntSlider(min=5,
@@ -407,7 +413,8 @@ def quadratic_widget(xMax_init = 15, yMax_init = 15, a_init = 1, b_init = 0, c_i
     # Link widgets as required
     widgets.jslink((xMax_slider,'value'),(yMax_slider,'value'))
 
-    def quadratic_plot(yMax,xMax, a, b, c, a2, b2, c2, altFlag, rootFlag, maxFlag):
+    def quadratic_plot(yMax,xMax, a, b, c, a2, b2, c2, altFlag, rootFlag, 
+                       maxFlag):
 
         # create an 'x' vector, calculate 'y' vector
         x = np.arange(-xMax,xMax,2*xMax/500)
@@ -495,7 +502,8 @@ def quadratic_widget(xMax_init = 15, yMax_init = 15, a_init = 1, b_init = 0, c_i
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -583,7 +591,8 @@ def logarithm_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','No
                                    disabled=False,
                                    indent=True)
 
-    def logarithmic_plot(yMax, xMax, curve1, curve2, curve3, pt1Flag, pt2Flag, pt3Flag, x1, x2, x3):
+    def logarithmic_plot(yMax, xMax, curve1, curve2, curve3, pt1Flag, pt2Flag, 
+                         pt3Flag, x1, x2, x3):
     
         # repackage inputs into lists
         bases = [curve1, curve2, curve3]
@@ -635,7 +644,8 @@ def logarithm_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','No
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -667,8 +677,10 @@ def logarithm_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','No
                                 x3_slider])])
     display(output)
     
-def exponential_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','None'], 
-                     flags_init = [False,False,False], pts_init = [2,4,8], invert_init = False):
+def exponential_widget(xMax_init = 5, yMax_init = 1, 
+                       bases_init = ['None','10','None'], 
+                       flags_init = [False,False,False], pts_init = [2,4,8], 
+                       invert_init = False):
     
     # Declare widgets for interactive input
     xMax_slider = widgets.IntSlider(min=1,
@@ -727,8 +739,8 @@ def exponential_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','
                                    disabled=False,
                                    indent=True)
 
-    def exponential_plot(yMax, xMax, curve1, curve2, curve3, pt1Flag, pt2Flag, pt3Flag, x1, x2, x3,
-                        invert):
+    def exponential_plot(yMax, xMax, curve1, curve2, curve3, pt1Flag, pt2Flag, 
+                         pt3Flag, x1, x2, x3, invert):
     
         # repackage inputs into lists
         bases = [curve1, curve2, curve3]
@@ -787,7 +799,8 @@ def exponential_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -877,7 +890,8 @@ def inverse_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','None
                                    disabled=False,
                                    indent=True)
 
-    def inverse_plot(yMax, xMax, curve1, curve2, curve3, pt1Flag, pt2Flag, pt3Flag, x1, x2, x3):
+    def inverse_plot(yMax, xMax, curve1, curve2, curve3, pt1Flag, pt2Flag, 
+                     pt3Flag, x1, x2, x3):
     
         # repackage inputs into lists
         bases = [curve1, curve2, curve3]
@@ -951,7 +965,8 @@ def inverse_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','None
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -983,8 +998,9 @@ def inverse_widget(xMax_init = 5, yMax_init = 1, bases_init = ['None','10','None
                                 x3_slider])])
     display(output)
 
-def quadratic_slope_widget(xMax_init = 10, yMax_init = 15, a_init = 0.4, b_init = -6, c_init = 25, 
-                     x1_init = 2.5, x2_init = 6, x1Flag_init = True, x2Flag_init = False):
+def quadratic_slope_widget(xMax_init = 10, yMax_init = 15, a_init = 0.4, 
+                           b_init = -6, c_init = 25, x1_init = 2.5, x2_init = 6,
+                           x1Flag_init = True, x2Flag_init = False):
     
     # Declare widgets for interactive input
     xMax_slider = widgets.IntSlider(min=5,
@@ -1095,7 +1111,8 @@ def quadratic_slope_widget(xMax_init = 10, yMax_init = 15, a_init = 0.4, b_init 
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -1103,13 +1120,13 @@ def quadratic_slope_widget(xMax_init = 10, yMax_init = 15, a_init = 0.4, b_init 
 
     out = widgets.interactive_output(quadratic_function, {'xMax': xMax_slider,
                                                           'yMax': yMax_slider,
-                                                           'a': a_slider,
-                                                           'b': b_slider,
-                                                           'c': c_slider,
-                                                           'x1': x1_slider,
-                                                           'x2': x2_slider,
-                                                           'x1Flag': x1Flag_check,  
-                                                           'x2Flag': x2Flag_check})
+                                                          'a': a_slider,
+                                                          'b': b_slider,
+                                                          'c': c_slider,
+                                                          'x1': x1_slider,
+                                                          'x2': x2_slider,
+                                                          'x1Flag': x1Flag_check,  
+                                                          'x2Flag': x2Flag_check})
 
     output = widgets.VBox([out,
                   widgets.HBox([xMax_slider,
@@ -1124,9 +1141,10 @@ def quadratic_slope_widget(xMax_init = 10, yMax_init = 15, a_init = 0.4, b_init 
                                 ])])
     display(output)
     
-def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5, yMax_init = 5, 
-                           a_init = 4,  b_init = -3, c_init = -6, d_init = 2, 
-                           d1Flag_init = True, d2Flag_init = False, areaFlag_init = False):
+def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5, 
+                      yMax_init = 5, a_init = 4,  b_init = -3, c_init = -6, 
+                      d_init = 2, d1Flag_init = True, d2Flag_init = False, 
+                      areaFlag_init = False):
     
     # Declare widgets for interactive input
     xMin_slider = widgets.IntSlider(min=-100,
@@ -1190,7 +1208,8 @@ def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5, yMax_init =
 #     widgets.jslink((xMax_slider,'value'),(x1_slider,'max'))
 #     widgets.jslink((xMax_slider,'value'),(x2_slider,'max'))
     
-    def derivative_plot(xMin, xMax, yMin, yMax, a, b, c, d, d1Flag, d2Flag, areaFlag):
+    def derivative_plot(xMin, xMax, yMin, yMax, a, b, c, d, d1Flag, d2Flag, 
+                        areaFlag):
 
         # Create an 'x' vector
         x = np.arange(xMin,xMax,(xMax-xMin)/500)
@@ -1296,8 +1315,9 @@ def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5, yMax_init =
                           ])
     display(output)
     
-def multivar_widget(curve_init = 'sines', xMin_init = -2, xMax_init = 2, xVal_init = 0, yVal_init = 0, 
-                      elev_init = 60, azim_init = 35, xCut_init = False, yCut_init = False):
+def multivar_widget(curve_init = 'sines', xMin_init = -2, xMax_init = 2, 
+                    xVal_init = 0, yVal_init = 0, elev_init = 60, 
+                    azim_init = 35, xCut_init = False, yCut_init = False):
     
     # Declare widgets for interactive input
     curve_list = widgets.Dropdown(options=['sines',
@@ -1405,13 +1425,16 @@ def multivar_widget(curve_init = 'sines', xMin_init = -2, xMax_init = 2, xVal_in
         ax.plot_surface(X, Y, Z, cmap='viridis')
         if xCut is True:
             ax.plot3D(X[:,0], Y[:,0], Z[:,0], 'r', linewidth=2)
-            ax.plot3D([xVal, xVal], [-xMax,xMax], [zMin,zMin], 'r--', linewidth=2)
+            ax.plot3D([xVal, xVal], [-xMax,xMax], [zMin,zMin], 'r--', 
+                      linewidth=2)
 
         if yCut is True:
             ax.plot3D(X[-1,:], Y[-1,:], Z[-1,:], 'r', linewidth=2)
-            ax.plot3D([-xMax,xMax], [yVal, yVal], [zMin,zMin], 'r--', linewidth=2)
+            ax.plot3D([-xMax,xMax], [yVal, yVal], [zMin,zMin], 'r--', 
+                      linewidth=2)
 
-        ax.plot3D([xVal], [yVal], [f(xVal, yVal)], marker = 'o', color = 'r', zorder=5)
+        ax.plot3D([xVal], [yVal], [f(xVal, yVal)], marker = 'o', color = 'r', 
+                  zorder=5)
 
         ax.set_xlim(xMin,xMax)
         ax.set_ylim(xMin,xMax)
@@ -1420,7 +1443,8 @@ def multivar_widget(curve_init = 'sines', xMin_init = -2, xMax_init = 2, xVal_in
         ax.invert_xaxis()
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
         ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1))
-        ax.set_zlabel(r'$z$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_zlabel(r'$z$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         plt.tight_layout()
 
     out = widgets.interactive_output(multivar_plot, {'curve':curve_list,
@@ -1446,8 +1470,9 @@ def multivar_widget(curve_init = 'sines', xMin_init = -2, xMax_init = 2, xVal_in
                           ])
     display(output)
     
-def matrix_widget(xMax_init = 10, yMax_init = 10, mode_init = 'A', A_base = [[1,0],[0,1]],
-                  B_base = [[1,0],[0,1]], D_base = [[3,4,5],[-1,2,-1]], fixScale_init = False):
+def matrix_widget(xMax_init = 10, yMax_init = 10, mode_init = 'A', 
+                  A_base = [[1,0],[0,1]], B_base = [[1,0],[0,1]], 
+                  D_base = [[3,4,5],[-1,2,-1]], fixScale_init = False):
     
     # Declare widgets for interactive input
     boxLayout = {'width': '175px'}
@@ -1626,7 +1651,8 @@ def matrix_widget(xMax_init = 10, yMax_init = 10, mode_init = 'A', A_base = [[1,
         ax[0].spines['left'].set_position('zero')
         ax[0].spines['right'].set_visible(False)
         ax[0].set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax[0].set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax[0].set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                         rotation=0)
         ax[0].plot(1, 0, ">k", transform=ax[0].get_yaxis_transform(), clip_on=False)
         ax[0].plot(0, 1, "^k", transform=ax[0].get_xaxis_transform(), clip_on=False)
         ax[0].tick_params(labelsize=20)
@@ -1663,7 +1689,8 @@ def matrix_widget(xMax_init = 10, yMax_init = 10, mode_init = 'A', A_base = [[1,
         ax[1].spines['left'].set_position('zero')
         ax[1].spines['right'].set_visible(False)
         ax[1].set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax[1].set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax[1].set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                         rotation=0)
         ax[1].plot(1, 0, ">k", transform=ax[1].get_yaxis_transform(), clip_on=False)
         ax[1].plot(0, 1, "^k", transform=ax[1].get_xaxis_transform(), clip_on=False)
         ax[1].tick_params(labelsize=20)
@@ -1708,8 +1735,8 @@ def matrix_widget(xMax_init = 10, yMax_init = 10, mode_init = 'A', A_base = [[1,
     
     display(output)
     
-def taylor_widget(xMin_init = -6, xMax_init = 6, yMin_init = -1.5, yMax_init = 1.5, 
-                  func_init = 'Sine', numTerms_init = 6):
+def taylor_widget(xMin_init = -6, xMax_init = 6, yMin_init = -1.5, 
+                  yMax_init = 1.5, func_init = 'Sine', numTerms_init = 6):
 
     # Declare widgets for interactive input
     xMin_slider = widgets.FloatSlider(min=-1000,
@@ -1760,8 +1787,8 @@ def taylor_widget(xMin_init = -6, xMax_init = 6, yMin_init = -1.5, yMax_init = 1
                    'Sine': lambda x: np.sin(x)}
 
         taylorDict = {'Exponential': lambda x,n: (x**n)/np.math.factorial(n),
-                   'Logarithm': lambda x,n: ((-1)**(n+1))*((x-1)**n)/n if n > 0 else 0,
-                   'Sine': lambda x,n: ((-1)**n)*(x**(2*n+1))/np.math.factorial(2*n+1)}
+          'Logarithm': lambda x,n: ((-1)**(n+1))*((x-1)**n)/n if n > 0 else 0,
+          'Sine': lambda x,n: ((-1)**n)*(x**(2*n+1))/np.math.factorial(2*n+1)}
 
         colors = ['b','r','g','m','c','y',
                   'b--','r--','g--','m--','c--','y--',
@@ -1784,7 +1811,8 @@ def taylor_widget(xMin_init = -6, xMax_init = 6, yMin_init = -1.5, yMax_init = 1
                     label='Term {:d}'.format(n))
 
         y = funcDict[func](x)
-        ax.plot(x, y,'k', linewidth=2, label=r'$\quad y = {:s}$'.format(labels[func]))
+        ax.plot(x, y,'k', linewidth=2, label=r'$\quad y = {:s}$'.format(
+            labels[func]))
 
         # Add legend and format axes to look nice
         ax.legend(loc='lower center', frameon=False,prop={'size':20},ncol=6,
@@ -1809,7 +1837,8 @@ def taylor_widget(xMin_init = -6, xMax_init = 6, yMin_init = -1.5, yMax_init = 1
             ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -1834,10 +1863,10 @@ def taylor_widget(xMin_init = -6, xMax_init = 6, yMin_init = -1.5, yMax_init = 1
 #------------------------------------------------------------------------------
 # Economic application widgets
     
-def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 12, xPrice_init = 16,
-                   yPrice_init = 10, budget_init = 100,
-                      elev_init = 30, azim_init = 290, zCut_init = False,
-                  constraintCut_init = False):
+def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, 
+                   xMax_init = 12, xPrice_init = 16, yPrice_init = 10, 
+                   budget_init = 100, elev_init = 30, azim_init = 290, 
+                   zCut_init = False, constraintCut_init = False):
     
     # Declare widgets for interactive input
     curve_list = widgets.Dropdown(options=['CD'],
@@ -1901,7 +1930,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 1
     
     # Link widgets as required
     
-    def optim_plot(curve, a, xMin, xMax, xPrice, yPrice, budget, elev, azim , zCut, constraintCut):
+    def optim_plot(curve, a, xMin, xMax, xPrice, yPrice, budget, elev, azim , 
+                   zCut, constraintCut):
 
         fundict = {'CD': lambda x, y: (x**a)*(y**(1-a)),
                   }
@@ -1964,7 +1994,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 1
         
         if constraintCut is True:
             ax.plot3D(xConstraint, yConstraint, zConstraint, 'b', linewidth=2)
-            ax.plot3D(xConstraint, yConstraint, 0*zConstraint, 'b--', linewidth=2, zorder = -5)
+            ax.plot3D(xConstraint, yConstraint, 0*zConstraint, 'b--', 
+                      linewidth=2, zorder = -5)
         
         if zCut is True:
             xIC = X[-1,:]
@@ -1972,10 +2003,12 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 1
             zIC = Z[-1,:]
             maskIC = yIC < xMax
             ax.plot3D(xIC[maskIC], yIC[maskIC], zIC[maskIC], 'r', linewidth=2)
-            ax.plot3D(xIC[maskIC], yIC[maskIC], 0*zIC[maskIC], 'r--', linewidth=2, zorder = -5)
+            ax.plot3D(xIC[maskIC], yIC[maskIC], 0*zIC[maskIC], 'r--', 
+                      linewidth=2, zorder = -5)
         
         if constraintCut is True and zCut is True:
-            ax.plot3D([xOpt],[yOpt], [zVal], marker = 'o', color = 'r', zorder = 5)
+            ax.plot3D([xOpt],[yOpt], [zVal], marker = 'o', color = 'r', 
+                      zorder = 5)
             ax.plot3D([0,xOpt],[yOpt,yOpt],[0,0],'r--',linewidth=1)
             ax.plot3D([xOpt,xOpt],[0,yOpt],[0,0],'r--',linewidth=1)
             ax.plot3D([xOpt,xOpt],[yOpt,yOpt],[0,zVal],'r--',linewidth=1)
@@ -1987,7 +2020,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 1
         ax.view_init(elev, azim)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
         ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1))
-        ax.set_zlabel(r'$U(x,y)$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_zlabel(r'$U(x,y)$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         
         # Plot Indifference curve map
         ax = fig.add_subplot(1, 2, 2)
@@ -2004,7 +2038,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 1
             ax.plot(xFull, fAlt(xFull, zVal), 'r', linewidth=2, alpha=0.6,
                     label=r'Highest reachable IC')
             # Add markers for the optimal point points, with dotted lines
-            ax.scatter(xConstraint[optInd], yConstraint[optInd], s=mrkrSize, c='r', alpha=0.6,
+            ax.scatter(xConstraint[optInd], yConstraint[optInd], s=mrkrSize, c='r', 
+                       alpha=0.6,
                         label='Optimal point')
             ax.plot([0,xOpt],[yOpt,yOpt],'r--',linewidth=1)
             ax.plot([xOpt,xOpt],[0,yOpt],'r--',linewidth=1)
@@ -2017,7 +2052,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 1
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         ax.tick_params(labelsize=20)
@@ -2051,8 +2087,9 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, xMax_init = 1
                           ])
     display(output)
     
-def elasticities_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 5, a_d_init = 2,
-    b_d_init = 25, a_s_init = 2, b_s_init = -3, Dflag_init = True, Sflag_init = False):
+def elasticities_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 5, 
+                        a_d_init = 2, b_d_init = 25, a_s_init = 2, b_s_init = -3, 
+                        Dflag_init = True, Sflag_init = False):
         
     # Declare widgets for interactive input
     Qmax_slider = widgets.IntSlider(min=5,
@@ -2198,7 +2235,8 @@ def elasticities_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 5, a_d_init 
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$Q$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -2226,8 +2264,9 @@ def elasticities_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 5, a_d_init 
                                 b_s_slider])])
     display(output)
 
-def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, Qeq_init = 7.5, Peq_init = 5,
-    E_s_init = 2.5, E_d_init = -1.5, Dflag_init = True, Sflag_init = True):
+def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, 
+                   Qeq_init = 7.5, Peq_init = 5, E_s_init = 2.5, 
+                   E_d_init = -1.5, Dflag_init = True, Sflag_init = True):
         
     # Declare widgets for interactive input
     Qmax_slider = widgets.IntSlider(min=5,
@@ -2277,7 +2316,7 @@ def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, Qeq_init = 7.
 
     def slope_plot(Qmax, Pmax, Qeq, Peq , E_d, E_s, Dflag, Sflag):
 
-        # Calculate demand supply curve parameters from input    
+        # Calculate linear supply/demand curve parameters from input    
         a_s = E_s*Peq/Qeq
         b_s = Peq-a_s*Qeq
         a_d = E_d*Peq/Qeq
@@ -2288,8 +2327,19 @@ def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, Qeq_init = 7.
         P_s = a_s*Q + b_s
         P_d = a_d*Q + b_d
 
-        # Create figure, plot supply/demand approximations with arrows
+        # Create figure, add markers for the price/quantity, with dotted lines
         fig, ax = plt.subplots(figsize=(20,10))
+        mrkrSize = 2*rcParams['lines.markersize'] ** 2
+        
+        ax.scatter(Qeq, Peq, s=mrkrSize, c='k', label='Equilibrium')  
+        ax.plot([Qeq,Qeq],[0,Peq],'k--',linewidth=1)
+        ax.plot([0,Qeq],[Peq,Peq],'k--',linewidth=1)
+        ax.annotate(r'$Q^*={:.2f}$'.format(Qeq),[Qeq,0], xytext = [Qeq+0.15,0.25], 
+                    xycoords ='data', fontsize = 25, clip_on = True)
+        ax.annotate(r'$P^*={:.2f}$'.format(Peq),[0,Peq], xytext = [0.15,Peq+0.25], 
+                    xycoords ='data', fontsize = 25, clip_on = True)
+        
+        # Plot supply/demand approximations with arrows, if requested
         if Sflag is True:
             ax.plot(Q, P_s,'r', linewidth=2, alpha=0.6,
                     label= 'Local approximation of Supply curve')
@@ -2303,6 +2353,13 @@ def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, Qeq_init = 7.
                                     'lw': 2, 
                                     'color': 'r', 
                                     'alpha':0.6})
+            # Add elasticity annotation
+            EsStr = r'$E_p^S = {:.2f}$'.format(E_s)
+            ax.annotate(EsStr,[Q[1],P_s[1]],
+                        xytext = [Q[1]+0.25,P_s[1]], 
+                        xycoords ='data',
+                        fontsize = 25,
+                        clip_on = True)            
 
         if Dflag is True:
             ax.plot(Q, P_d,'b', linewidth=2, alpha=0.6,
@@ -2317,28 +2374,7 @@ def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, Qeq_init = 7.
                                     'lw': 2, 
                                     'color': 'b', 
                                     'alpha':0.6})
-
-        # Add markers for the price/quantity points, with dotted lines
-        mrkrSize = 2*rcParams['lines.markersize'] ** 2
-        if Sflag is True and Dflag is True:
-            ax.scatter(Qeq, Peq, s=mrkrSize, c='k', label='Equilibrium')       
-
-            ax.plot([Qeq,Qeq],[0,Peq],'k--',linewidth=1)
-            ax.plot([0,Qeq],[Peq,Peq],'k--',linewidth=1)
-            ax.annotate(r'$Q^*={:.2f}$'.format(Qeq),[Qeq,0], xytext = [Qeq+0.15,0.25], 
-                        xycoords ='data', fontsize = 25, clip_on = True)
-            ax.annotate(r'$P^*={:.2f}$'.format(Peq),[0,Peq], xytext = [0.15,Peq+0.25], 
-                        xycoords ='data', fontsize = 25, clip_on = True)
-
-    #    # Add elasticity annotations
-        if Sflag is True:
-            EsStr = r'$E_p^S = {:.2f}$'.format(E_s)
-            ax.annotate(EsStr,[Q[1],P_s[1]],
-                        xytext = [Q[1]+0.25,P_s[1]], 
-                        xycoords ='data',
-                        fontsize = 25,
-                        clip_on = True)
-        if Dflag is True:
+            # Add elasticity annotation
             EdStr = r'$E_p^D = {:.2f}$'.format(E_d)
             ax.annotate(EdStr,[Q[1],P_d[1]],
                         xytext = [Q[1]+0.25,P_d[1]-0.5], 
@@ -2347,15 +2383,15 @@ def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, Qeq_init = 7.
                         clip_on = True)
 
         # Add legend and format axes to look nice
-        if Sflag is True or Dflag is True:
-            ax.legend(loc='upper center', frameon=False,prop={'size':20})
+        ax.legend(loc='upper center', frameon=False,prop={'size':20})
         ax.autoscale(enable=True, axis='both', tight=True)
         ax.set_ylim(top = Pmax, bottom = 0)
         ax.set_xlim(right = Qmax, left = 0)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$Q$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -2382,7 +2418,8 @@ def slope_from_elasticities_widget(Qmax_init = 15, Pmax_init = 10, Qeq_init = 7.
     display(output) 
     
 def tax_widget(Qmax_init = 15, Pmax_init = 30, Tval_init = 0, a_d_init = 2,
-    b_d_init = 25, a_s_init = 2, b_s_init = -3, Rflag_init = False, Lflag_init = False):
+    b_d_init = 25, a_s_init = 2, b_s_init = -3, Rflag_init = False, 
+    Lflag_init = False):
         
     # Declare widgets for interactive input
     Qmax_slider = widgets.IntSlider(min=5,
@@ -2464,7 +2501,8 @@ def tax_widget(Qmax_init = 15, Pmax_init = 30, Tval_init = 0, a_d_init = 2,
         # Add markers for the price/quantity points, with dotted lines
         mrkrSize = 2*rcParams['lines.markersize'] ** 2
         ax.scatter(Qeq, Peq, s=mrkrSize, c='k', 
-                   label=r'Equilibrium, no tax ($Q^*$={:.2f},$P^*$={:.2f})'.format(Qeq,Peq))
+                   label=r'Equilibrium, no tax ($Q^*$={:.2f},$P^*$={:.2f})'.format(
+                       Qeq,Peq))
         ax.scatter(QT, Pval_s, s=mrkrSize, c='k', alpha=0.6, 
                    label='Equilibrium, with tax')
         ax.scatter(QT, Pval_d, s=mrkrSize, c='k', alpha=0.6)
@@ -2491,8 +2529,9 @@ def tax_widget(Qmax_init = 15, Pmax_init = 30, Tval_init = 0, a_d_init = 2,
                     xycoords ='data', fontsize = 25, clip_on = True)
         ax.annotate(r'$P^*$',[0,Peq], xytext = [0.15,Peq+0.25], 
                     xycoords ='data', fontsize = 25, clip_on = True)
-        ax.annotate(r'$T={:.2f}$'.format(Tval),[0,(Pval_s+Pval_d)/2], xytext = [1,(Pval_s+Pval_d)/2], 
-                    xycoords ='data', fontsize = 25, clip_on = True)
+        ax.annotate(r'$T={:.2f}$'.format(Tval),[0,(Pval_s+Pval_d)/2], 
+                    xytext = [1,(Pval_s+Pval_d)/2], xycoords ='data', 
+                    fontsize = 25, clip_on = True)
         ax.annotate(r'$P_s$',[0,Pval_s], xytext = [0.15,Pval_s+0.25], 
                     xycoords ='data', fontsize = 25, clip_on = True)
         ax.annotate(r'$P_d$',[0,Pval_d], xytext = [0.15,Pval_d+0.25], 
@@ -2506,7 +2545,8 @@ def tax_widget(Qmax_init = 15, Pmax_init = 30, Tval_init = 0, a_d_init = 2,
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$Q$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -2534,8 +2574,9 @@ def tax_widget(Qmax_init = 15, Pmax_init = 30, Tval_init = 0, a_d_init = 2,
                                 b_s_slider])])
     display(output)
     
-def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init = 'Negative',
-                 shockSize_init = 10, NumRounds_init = 5, Normalise_init = False, 
+def uk_IO_widget(shockSector_init = ['Financial and insurance'], 
+                 shockSign_init = 'Negative', shockSize_init = 10, 
+                 NumRounds_init = 5, Normalise_init = False, 
                  plotType_init = 'Shocks over time'):
     
     shockSector_list = widgets.SelectMultiple(options=['Agriculture',
@@ -2555,7 +2596,8 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
                                 value = shockSign_init,
                                 description='Sign:',
                                 disabled=False)
-    plotType_list = widgets.Dropdown(options=['Shocks over time', 'Cumulative shocks'],
+    plotType_list = widgets.Dropdown(options=['Shocks over time', 
+                                              'Cumulative shocks'],
                                 value = plotType_init,
                                 description='Diagram:',
                                 disabled=False)
@@ -2713,8 +2755,10 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
             ax.xaxis.set_label_coords(0.5, xLabelYPos)
             ax.set_ylabel('Impact', fontdict = {'fontsize': 25})
             
-            ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
-            ax.plot(0, yAxisArrowPos, yAxisArrow, transform=ax.get_xaxis_transform(), clip_on=False)
+            ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), 
+                    clip_on=False)
+            ax.plot(0, yAxisArrowPos, yAxisArrow, 
+                    transform=ax.get_xaxis_transform(), clip_on=False)
 
 
         elif plotType == 'Cumulative shocks':
@@ -2761,7 +2805,8 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
                 yAxisArrow = "vk"
 
             ax.annotate(coverStr,[0,annotLoc1], xytext = [0.05,annotLoc2], 
-                        xycoords ='axes fraction', fontsize = 25, clip_on = True)
+                        xycoords ='axes fraction', fontsize = 25, 
+                        clip_on = True)
                 
             ax.set_xlim(right = NumRounds+0.5, left = -0.5)
             ax.legend(loc=legLoc, frameon=False,prop={'size':20},ncol=3, 
@@ -2774,18 +2819,19 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'], shockSign_init 
             ax.set_ylabel('Cumulative Impact', fontdict = {'fontsize': 25})
 
             ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
-            ax.plot(-0.5, yAxisArrowPos, yAxisArrow, transform=ax.get_xaxis_transform(), clip_on=False)
+            ax.plot(-0.5, yAxisArrowPos, yAxisArrow, 
+                    transform=ax.get_xaxis_transform(), clip_on=False)
 
 
 
         plt.tight_layout()
     
     out = widgets.interactive_output(uk_IO_plot, {'shockSector': shockSector_list,
-                                                   'shockSign': shockSign_list,
-                                                   'shockSize': shockSize_slider, 
-                                                   'NumRounds': NumRounds_slider,
-                                                   'plotType': plotType_list,                                                      
-                                                   'Normalise': Normalise_check})
+                                                  'shockSign': shockSign_list,
+                                                  'shockSize': shockSize_slider, 
+                                                  'NumRounds': NumRounds_slider,
+                                                  'plotType': plotType_list,                                                      
+                                                  'Normalise': Normalise_check})
     
     lblStr = 'Pick sector(s) to shock:'
     output = widgets.VBox([out,
