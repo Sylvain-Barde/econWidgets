@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from matplotlib import cm
 from matplotlib.colors import ListedColormap
-from IPython.display import display, HTML
+from IPython.display import display
 
 #------------------------------------------------------------------------------
 # Mathematics widgets
@@ -1205,8 +1205,6 @@ def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5,
                                    indent=True)
     
     # Link widgets as required
-#     widgets.jslink((xMax_slider,'value'),(x1_slider,'max'))
-#     widgets.jslink((xMax_slider,'value'),(x2_slider,'max'))
     
     def derivative_plot(xMin, xMax, yMin, yMax, a, b, c, d, d1Flag, d2Flag, 
                         areaFlag):
@@ -1267,7 +1265,8 @@ def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5,
                     'r',alpha = 0.15, label = r'$\frac{dy}{dx} < 0$')
             if roots:
                 for root in roots:
-                    ax.scatter([root,root], [0,f(root)], s=mrkrSize, c='k', alpha=0.6)
+                    ax.scatter([root,root], [0,f(root)], s=mrkrSize, c='k', 
+                               alpha=0.6)
                     ax.plot([root,root], [0,f(root)],'k--',linewidth=1)
 
         # Add legend and format axes to look nice
@@ -1282,7 +1281,8 @@ def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5,
         ax.spines['left'].set_position('zero')
         ax.spines['right'].set_visible(False)
         ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
         ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
         ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
         plt.tick_params(labelsize=20)
@@ -2846,7 +2846,8 @@ def uk_IO_widget(shockSector_init = ['Financial and insurance'],
     
     display(output)
     
-def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, a_d_init = 2, b_d_init = 25):
+def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, 
+                         a_d_init = 2, b_d_init = 25):
 
     # Declare widgets for interactive input
     Qmax_slider = widgets.IntSlider(min= 5,
@@ -2915,8 +2916,8 @@ def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, a_d_in
                     xytext = [Qval+0.15,0.25], xycoords ='data', fontsize = 25, 
                     clip_on = True)
         ax[0].annotate(r'$P_d={:.2f}$'.format(Pval_d),[0,Pval_d], 
-                    xytext = [0.15,Pval_d+0.25], xycoords ='data', fontsize = 25, 
-                    clip_on = True)
+                    xytext = [0.15,Pval_d+0.25], xycoords ='data', 
+                    fontsize = 25, clip_on = True)
 
         # Add legend and format axes to look nice
         ax[0].legend(loc='upper center', frameon=False,prop={'size':20})
@@ -2926,9 +2927,12 @@ def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, a_d_in
         ax[0].spines['top'].set_visible(False)
         ax[0].spines['right'].set_visible(False)
         ax[0].set_xlabel(r'$Q$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax[0].set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
-        ax[0].plot(1, 0, ">k", transform=ax[0].get_yaxis_transform(), clip_on=False)
-        ax[0].plot(0, 1, "^k", transform=ax[0].get_xaxis_transform(), clip_on=False)
+        ax[0].set_ylabel(r'$P$', fontdict = {'fontsize': 25},position=(0, 1), 
+                         rotation=0)
+        ax[0].plot(1, 0, ">k", transform=ax[0].get_yaxis_transform(), 
+                   clip_on=False)
+        ax[0].plot(0, 1, "^k", transform=ax[0].get_xaxis_transform(), 
+                   clip_on=False)
         ax[0].tick_params(labelsize=20)
 
         # Plot Total revenue
@@ -2967,10 +2971,10 @@ def total_revenue_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 7.5, a_d_in
         plt.tight_layout()
     
     out = widgets.interactive_output(total_revenue_plot, {'Qmax': Qmax_slider,
-                                                       'Pmax': Pmax_slider,
-                                                       'Qval': Qval_slider, 
-                                                       'a_d': a_d_slider,
-                                                       'b_d': b_d_slider})
+                                                          'Pmax': Pmax_slider,
+                                                          'Qval': Qval_slider, 
+                                                          'a_d': a_d_slider,
+                                                          'b_d': b_d_slider})
 
     output = widgets.VBox([out,
                   widgets.HBox([Qmax_slider,
@@ -3094,8 +3098,8 @@ def compound_interest_widget(xMin_init = 0, xMax_init = 1.1, yMin_init = 0,
                                                  'xMax': xMax_slider,
                                                  'yMin': yMin_slider,
                                                  'yMax': yMax_slider,
-                                                 'numTermsStr': numTermsStr_text,
-                                                 'expFlag' : expFlag_check})
+                                             'numTermsStr': numTermsStr_text,
+                                             'expFlag' : expFlag_check})
 
     output = widgets.VBox([out,
                   widgets.HBox([xMin_slider,
@@ -3241,9 +3245,9 @@ def log_demand_widget(Pmax_init = 15,Qmax_init = 10, Pval1_init = 5,
     
     display(output)
     
-def profit_maximisation_widget(Qmax_init = 8,  a_d_init = 2, b_d_init = 5, c_d_init = 50, 
-                   a_s_init = 1, b_s_init = -4, c_s_init = 10, d_s_init = 0, 
-                   revFlag_init = True, cstFlag_init = True):
+def profit_maximisation_widget(Qmax_init = 7,  a_d_init = 2, b_d_init = 5, 
+                   c_d_init = 50, a_s_init = 1, b_s_init = -4, c_s_init = 10, 
+                   d_s_init = 0, revFlag_init = True, cstFlag_init = True):
 
     # Declare widgets for interactive input
     Qmax_slider = widgets.IntSlider(min= 5,
@@ -3352,16 +3356,15 @@ def profit_maximisation_widget(Qmax_init = 8,  a_d_init = 2, b_d_init = 5, c_d_i
         # Plot Cost if requested
         if cstFlag is True:
             ax[0].plot(Q, AC(Q),'r', linewidth=2, alpha=0.6,
-              label = lblAC.format(
-                      a_s, sig[2], abs(b_s), sig[3], abs(c_s), sig[4], abs(d_s)))
+              label = lblAC.format(a_s, sig[2], abs(b_s), sig[3], abs(c_s), 
+                                   sig[4], abs(d_s)))
             ax[0].plot(Q, mC(Q),'r--', linewidth=2, alpha=0.6,
-              label=lblmC.format(
-                      3*a_s, sig[2], abs(2*b_s), sig[3], abs(c_s) ))
+              label=lblmC.format(3*a_s, sig[2], abs(2*b_s), sig[3], abs(c_s) ))
 
         if revFlag is True and cstFlag is True:
             # Plot profits
-            ax[0].fill([0,Qval,Qval,0],[AC(Qval),AC(Qval),AR(Qval),AR(Qval)],'g',alpha = 0.2,
-                        label = r'$\Pi = (AR-AC) \times Q$')
+            ax[0].fill([0,Qval,Qval,0],[AC(Qval),AC(Qval),AR(Qval),AR(Qval)],
+                       'g',alpha = 0.2,label = r'$\Pi = (AR-AC) \times Q$')
             ax[0].scatter([Qval, Qval, Qval],
                           [AR(Qval),mR(Qval),AC(Qval)],
                           s=mrkrSize, c='k', alpha=0.6, label='Max profits')
@@ -3378,9 +3381,12 @@ def profit_maximisation_widget(Qmax_init = 8,  a_d_init = 2, b_d_init = 5, c_d_i
         ax[0].spines['top'].set_visible(False)
         ax[0].spines['right'].set_visible(False)
         ax[0].set_xlabel(r'$Q$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax[0].set_ylabel(r'$£$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
-        ax[0].plot(1, 0, ">k", transform=ax[0].get_yaxis_transform(), clip_on=False)
-        ax[0].plot(0, 1, "^k", transform=ax[0].get_xaxis_transform(), clip_on=False)
+        ax[0].set_ylabel(r'$£$', fontdict = {'fontsize': 25},position=(0, 1), 
+                         rotation=0)
+        ax[0].plot(1, 0, ">k", transform=ax[0].get_yaxis_transform(), 
+                   clip_on=False)
+        ax[0].plot(0, 1, "^k", transform=ax[0].get_xaxis_transform(), 
+                   clip_on=False)
         ax[0].tick_params(labelsize=20)
 
         # Plot Total revenue
@@ -3392,8 +3398,8 @@ def profit_maximisation_widget(Qmax_init = 8,  a_d_init = 2, b_d_init = 5, c_d_i
         # Plot Cost if requested
         if cstFlag is True:
             ax[1].plot(Q, TC(Q),'r', linewidth=2, alpha=0.6,
-              label = lblTC.format(
-                      a_s, sig[2], abs(b_s), sig[3], abs(c_s), sig[4], abs(d_s)))
+              label = lblTC.format(a_s, sig[2], abs(b_s), sig[3], abs(c_s), 
+                                   sig[4], abs(d_s)))
 
         if revFlag is True and cstFlag is True:
             # Plot profits
@@ -3428,9 +3434,12 @@ def profit_maximisation_widget(Qmax_init = 8,  a_d_init = 2, b_d_init = 5, c_d_i
         ax[1].spines['top'].set_visible(False)
         ax[1].spines['right'].set_visible(False)
         ax[1].set_xlabel(r'$Q$', fontdict = {'fontsize': 25},position=(1, 0))
-        ax[1].set_ylabel(r'$£$', fontdict = {'fontsize': 25},position=(0, 1), rotation=0)
-        ax[1].plot(1, 0, ">k", transform=ax[1].get_yaxis_transform(), clip_on=False)
-        ax[1].plot(0, 1, "^k", transform=ax[1].get_xaxis_transform(), clip_on=False)
+        ax[1].set_ylabel(r'$£$', fontdict = {'fontsize': 25},position=(0, 1), 
+                         rotation=0)
+        ax[1].plot(1, 0, ">k", transform=ax[1].get_yaxis_transform(), 
+                   clip_on=False)
+        ax[1].plot(0, 1, "^k", transform=ax[1].get_xaxis_transform(), 
+                   clip_on=False)
         ax[1].tick_params(labelsize=20)  
 
         plt.tight_layout()
