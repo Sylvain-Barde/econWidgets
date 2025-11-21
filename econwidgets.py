@@ -304,7 +304,8 @@ def system_widget(xMax_init = 15, yMax_init = 15, a_init = 3, b_init = -4,
             sigEq2 = '+'
         ax.annotate(solLabel,[0.75,0], xytext = [0.75,0.05],
                     xycoords ='axes fraction', fontsize = 25, clip_on = True)
-        ax.annotate(r"$\{$",[0,30], fontsize=80, xycoords='axes points',alpha = 0.6)
+        ax.annotate(r"$\{$",[0,30], fontsize=80, xycoords='axes points',
+                    alpha = 0.6)
         ax.annotate(r'{:}x {:s} {:}y = {:}'.format(a,sigEq1,abs(b),c),[40,60],
                     xycoords ='axes points', color = 'b', alpha = 0.6,
                     fontsize = 25)
@@ -1316,8 +1317,8 @@ def derivative_widget(xMin_init = -5, xMax_init = 5, yMin_init = -5,
     display(output)
     
 def multivar_widget(curve_init = 'sines', xMin_init = -2, xMax_init = 2, 
-                    xVal_init = 0, yVal_init = 0, elev_init = 60, 
-                    azim_init = 35, xCut_init = False, yCut_init = False):
+                    xVal_init = 0, yVal_init = 0, elev_init = 30, 
+                    azim_init = 30, xCut_init = False, yCut_init = False):
     
     # Declare widgets for interactive input
     curve_list = widgets.Dropdown(options=['sines',
@@ -1419,17 +1420,17 @@ def multivar_widget(curve_init = 'sines', xMin_init = -2, xMax_init = 2,
         zMax = 1.5*max(ZFull.flatten())
 
         # Create figure, plot function and derivatives as required
-        fig = plt.subplots(figsize=(20,10))
-        ax = plt.axes(projection='3d')
+        fig, ax = plt.subplots(figsize=(20,10), 
+                               subplot_kw={"projection": "3d"})
 
-        ax.plot_surface(X, Y, Z, cmap='viridis')
+        ax.plot_surface(X, Y, Z, cmap='viridis', zorder=-1)
         if xCut is True:
-            ax.plot3D(X[:,0], Y[:,0], Z[:,0], 'r', linewidth=2)
+            ax.plot3D(X[:,0], Y[:,0], Z[:,0], 'r', linewidth=2, zorder=10)
             ax.plot3D([xVal, xVal], [-xMax,xMax], [zMin,zMin], 'r--', 
                       linewidth=2)
 
         if yCut is True:
-            ax.plot3D(X[-1,:], Y[-1,:], Z[-1,:], 'r', linewidth=2)
+            ax.plot3D(X[-1,:], Y[-1,:], Z[-1,:], 'r', linewidth=2, zorder=10)
             ax.plot3D([-xMax,xMax], [yVal, yVal], [zMin,zMin], 'r--', 
                       linewidth=2)
 
@@ -1862,8 +1863,186 @@ def taylor_widget(xMin_init = -6, xMax_init = 6, yMin_init = -1.5,
     
 #------------------------------------------------------------------------------
 # Economic application widgets
-    
+
 def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, 
+                   xMax_init = 10, xVal_init = 5, yVal_init = 5, 
+                   elev_init = 30, azim_init = 290, zCut_init = False):
+    
+    # Declare widgets for interactive input
+    curve_list = widgets.Dropdown(options=['CD'],
+                                value = curve_init,
+                                description='function:',
+                                disabled=False)
+    a_slider = widgets.FloatSlider(min=0,
+                                 max=1,
+                                 step=0.1,
+                                 description=r'$\alpha$:',
+                                 value = a_init,
+                                 continuous_update =False)
+    xMin_slider = widgets.IntSlider(min=-100,
+                                 max=0,
+                                 step=1,
+                                 description=r'Min. $x$,$y$:',
+                                 value = xMin_init,
+                                 continuous_update =False)    
+    xMax_slider = widgets.IntSlider(min=0,
+                                 max=100,
+                                 step=1,
+                                 description=r'Max. $x$,$y$:',
+                                 value = xMax_init,
+                                 continuous_update =False)
+    xVal_slider = widgets.FloatSlider(min=-100,
+                                 max=100,
+                                 step=1,
+                                 description=r'$x$ coord:',
+                                 value = xVal_init,
+                                 continuous_update =False)
+    yVal_slider = widgets.FloatSlider(min=-100,
+                                 max=100,
+                                 step=1,
+                                 description=r'$y$ coord:',
+                                 value = yVal_init,
+                                 continuous_update =False)
+    elev_slider = widgets.FloatSlider(min=-90,
+                                 max=90,
+                                 description= 'Elevation:',
+                                 value = elev_init,
+                                 continuous_update =False)
+    azim_slider = widgets.FloatSlider(min=0,
+                                 max=360,
+                                 description= 'Azimuth:',
+                                 value = azim_init,
+                                 continuous_update =False)
+    zCut_check = widgets.Checkbox(value = zCut_init,
+                                   description='Fix $U$',
+                                   disabled=False,
+                                   indent=True)    
+    
+    # Link widgets as required
+    widgets.jslink((xMax_slider,'value'),(xVal_slider,'max'))
+    widgets.jslink((xMin_slider,'value'),(xVal_slider,'min'))
+    widgets.jslink((xMax_slider,'value'),(yVal_slider,'max'))
+    widgets.jslink((xMin_slider,'value'),(yVal_slider,'min'))
+    
+    def utility_plot(curve, a, xMin, xMax, xVal, yVal, elev, azim , zCut):
+
+        fundict = {'CD': lambda x, y: (x**a)*(y**(1-a)),
+                  }
+        fundictAlt = {'CD': lambda x, z: (x**(-a/(1-a)))*(z**(1/(1-a))),
+                  }
+
+        f = fundict[curve]
+        fAlt = fundictAlt[curve]
+
+        res = 50
+        xFull = np.linspace(1e-3, xMax, res)
+        yFull = np.linspace(1e-3, xMax, res)
+        XFull, YFull = np.meshgrid(xFull, yFull)
+        ZFull = f(XFull, YFull)
+
+        zVal = f(xVal, yVal)
+        zMax = max(ZFull.flatten())
+
+        if zCut is True:
+            resZ = int(np.floor((zVal/zMax)*res))
+            z = np.linspace(0, zVal, resZ)
+            zCover = (zVal/zMax)
+            viridis = cm.get_cmap('viridis', 512)
+            myCmap = ListedColormap(
+                       viridis(np.linspace(0, zCover, 256))
+                       )
+        else:
+            z = np.linspace(0, zMax, res)
+            myCmap = 'viridis'
+
+        X, Z = np.meshgrid(xFull, z)
+        Y = fAlt(X, Z)
+                
+        Y = np.clip(Y,0,xMax)
+        Z = f(X,Y)
+        
+        # Create figure
+        mrkrSize = 2*rcParams['lines.markersize'] ** 2
+        fig = plt.figure(figsize=(20,10))
+
+        # Plot 3D utility function
+        ax = fig.add_subplot(1, 2, 1, projection='3d')
+        ax.plot_surface(X, Y, Z, cmap=myCmap)
+        
+        if zCut is True:
+            xIC = X[-1,:]
+            yIC = Y[-1,:]
+            zIC = Z[-1,:]
+            maskIC = yIC < xMax
+            ax.plot3D(xIC[maskIC], yIC[maskIC], zIC[maskIC], 'r', linewidth=2)
+            
+        ax.plot3D([xVal], [yVal], [f(xVal, yVal)], marker = 'o', color = 'r', 
+                  zorder = 5)
+        ax.set_xlim(xMin,xMax)
+        ax.set_ylim(xMin,xMax)
+        ax.set_zlim(0,1.5*zMax)
+        ax.view_init(elev, azim)
+        ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1))
+        ax.set_zlabel(r'$U(x,y)$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
+        
+        # Plot Indifference curve map
+        ax = fig.add_subplot(1, 2, 2)
+        numIC = 6
+        zStepVec = np.linspace(zMax/numIC, zMax-1/numIC, numIC)
+        for zStep in zStepVec:
+            ax.plot(xFull, fAlt(xFull, zStep), 'k--', alpha=0.3)
+        
+        if zCut is True:
+            zCurr = f(xVal,yVal)
+            ax.plot(xFull, fAlt(xFull, zCurr), 'r', linewidth=2, alpha=0.6,
+                    label=r'Current indifference curve')
+
+        # Add markers for the price/quantity points, with dotted lines
+        ax.scatter(xVal, yVal, s=mrkrSize, c='k', alpha=0.6,
+                    label='Selection')
+        ax.plot([0,xVal],[yVal,yVal],'r--',linewidth=1)
+        ax.plot([xVal,xVal],[0,yVal],'r--',linewidth=1)
+
+        ax.autoscale(enable=True, axis='both', tight=True)
+        ax.set_ylim(top = xMax, bottom = 0)
+        ax.set_xlim(right = xMax, left = 0)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.set_xlabel(r'$x$', fontdict = {'fontsize': 25},position=(1, 0))
+        ax.set_ylabel(r'$y$', fontdict = {'fontsize': 25},position=(0, 1), 
+                      rotation=0)
+        ax.plot(1, 0, ">k", transform=ax.get_yaxis_transform(), clip_on=False)
+        ax.plot(0, 1, "^k", transform=ax.get_xaxis_transform(), clip_on=False)
+        ax.tick_params(labelsize=20)
+        
+        plt.tight_layout()
+
+    out = widgets.interactive_output(utility_plot, {'curve': curve_list,
+                                                       'a': a_slider,
+                                                       'xMin': xMin_slider,
+                                                       'xMax': xMax_slider,
+                                                       'xVal': xVal_slider,
+                                                       'yVal': yVal_slider,
+                                                       'elev': elev_slider,
+                                                       'azim': azim_slider,
+                                                       'zCut': zCut_check})
+        
+    output = widgets.VBox([out,
+                  widgets.HBox([curve_list,
+                                a_slider]),
+                  widgets.HBox([xMin_slider,
+                                xMax_slider,
+                                xVal_slider,
+                                yVal_slider]),
+                  widgets.HBox([elev_slider, 
+                                azim_slider,
+                                zCut_check])
+                          ])
+    display(output)
+    
+def optimisation_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, 
                    xMax_init = 12, xPrice_init = 16, yPrice_init = 10, 
                    budget_init = 100, elev_init = 30, azim_init = 290, 
                    zCut_init = False, constraintCut_init = False):
@@ -1930,7 +2109,7 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
     
     # Link widgets as required
     
-    def optim_plot(curve, a, xMin, xMax, xPrice, yPrice, budget, elev, azim , 
+    def optim_plot(curve, a, xMin, xMax, xPrice, yPrice, budget, elev, azim, 
                    zCut, constraintCut):
 
         fundict = {'CD': lambda x, y: (x**a)*(y**(1-a)),
@@ -2038,9 +2217,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
             ax.plot(xFull, fAlt(xFull, zVal), 'r', linewidth=2, alpha=0.6,
                     label=r'Highest reachable IC')
             # Add markers for the optimal point points, with dotted lines
-            ax.scatter(xConstraint[optInd], yConstraint[optInd], s=mrkrSize, c='r', 
-                       alpha=0.6,
-                        label='Optimal point')
+            ax.scatter(xConstraint[optInd], yConstraint[optInd], s=mrkrSize, 
+                       c='r', alpha=0.6,label='Optimal point')
             ax.plot([0,xOpt],[yOpt,yOpt],'r--',linewidth=1)
             ax.plot([xOpt,xOpt],[0,yOpt],'r--',linewidth=1)
 
@@ -2061,16 +2239,16 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
         plt.tight_layout()
 
     out = widgets.interactive_output(optim_plot, {'curve': curve_list,
-                                                   'a': a_slider,
-                                                   'xMin': xMin_slider,
-                                                   'xMax': xMax_slider,
-                                                   'xPrice': xPrice_slider,
-                                                   'yPrice': yPrice_slider,
-                                                   'budget':budget_slider,
-                                                   'elev': elev_slider,
-                                                   'azim': azim_slider,
-                                                   'zCut': zCut_check,
-                                                   'constraintCut': constraintCut_check})
+                                        'a': a_slider,
+                                        'xMin': xMin_slider,
+                                        'xMax': xMax_slider,
+                                        'xPrice': xPrice_slider,
+                                        'yPrice': yPrice_slider,
+                                        'budget':budget_slider,
+                                        'elev': elev_slider,
+                                        'azim': azim_slider,
+                                        'zCut': zCut_check,
+                                        'constraintCut': constraintCut_check})
         
     output = widgets.VBox([out,
                   widgets.HBox([curve_list,
@@ -2088,8 +2266,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
     display(output)
     
 def elasticities_widget(Qmax_init = 15, Pmax_init = 30, Qval_init = 5, 
-                        a_d_init = 2, b_d_init = 25, a_s_init = 2, b_s_init = -3, 
-                        Dflag_init = True, Sflag_init = False):
+                        a_d_init = 2, b_d_init = 25, a_s_init = 2, 
+                        b_s_init = -3, Dflag_init = True, Sflag_init = False):
         
     # Declare widgets for interactive input
     Qmax_slider = widgets.IntSlider(min=5,
