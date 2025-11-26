@@ -2045,7 +2045,8 @@ def utility_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
 def optimisation_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0, 
                    xMax_init = 12, xPrice_init = 16, yPrice_init = 10, 
                    budget_init = 100, elev_init = 30, azim_init = 290, 
-                   zCut_init = False, constraintCut_init = False):
+                   zCut_init = False, constraintCut_init = False,
+                   foc_init = False):
     
     # Declare widgets for interactive input
     curve_list = widgets.Dropdown(options=['CD'],
@@ -2105,20 +2106,27 @@ def optimisation_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
     constraintCut_check = widgets.Checkbox(value = constraintCut_init,
                                    description='Fix $M$',
                                    disabled=False,
+                                   indent=True)
+    foc_check = widgets.Checkbox(value = foc_init,
+                                   description='Show FOC',
+                                   disabled=False,
                                    indent=True)  
     
     # Link widgets as required
     
     def optim_plot(curve, a, xMin, xMax, xPrice, yPrice, budget, elev, azim, 
-                   zCut, constraintCut):
+                   zCut, constraintCut, foc):
 
         fundict = {'CD': lambda x, y: (x**a)*(y**(1-a)),
                   }
         fundictAlt = {'CD': lambda x, z: (x**(-a/(1-a)))*(z**(1/(1-a))),
                   }
 
-        # if zCut is True and constraintCut is False:
-            # zCut = False
+        if zCut is True and constraintCut is False:
+            zCut = False
+            
+        if foc is True and zCut is False:
+            foc = False
         
         f = fundict[curve]
         fAlt = fundictAlt[curve]
@@ -2216,14 +2224,21 @@ def optimisation_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
         if zCut is True:
             ax.plot(xFull, fAlt(xFull, zVal), 'r', linewidth=2, alpha=0.6,
                     label=r'Highest reachable IC')
+
             # Add markers for the optimal point points, with dotted lines
             ax.scatter(xConstraint[optInd], yConstraint[optInd], s=mrkrSize, 
                        c='r', alpha=0.6,label='Optimal point')
             ax.plot([0,xOpt],[yOpt,yOpt],'r--',linewidth=1)
             ax.plot([xOpt,xOpt],[0,yOpt],'r--',linewidth=1)
+            
+        if foc is True:
+            foc = (xPrice/yPrice)*((1-a)/a)
+            ax.plot([0,xMax],[0,foc*xMax],'g--',linewidth=2, alpha=0.6,
+                    label=r'FOC $y=\frac{(1-\alpha) p_x}{\alpha p_y} x$')
 
         if constraintCut is True:
             ax.legend(loc='upper right', frameon=False,prop={'size':20})
+            
         ax.autoscale(enable=True, axis='both', tight=True)
         ax.set_ylim(top = xMax, bottom = 0)
         ax.set_xlim(right = xMax, left = 0)
@@ -2248,7 +2263,8 @@ def optimisation_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
                                         'elev': elev_slider,
                                         'azim': azim_slider,
                                         'zCut': zCut_check,
-                                        'constraintCut': constraintCut_check})
+                                        'constraintCut': constraintCut_check,
+                                        'foc': foc_check})
         
     output = widgets.VBox([out,
                   widgets.HBox([curve_list,
@@ -2261,7 +2277,8 @@ def optimisation_widget(curve_init = 'CD', a_init = 0.5, xMin_init = 0,
                   widgets.HBox([elev_slider, 
                                 azim_slider,
                                 constraintCut_check,
-                                zCut_check])
+                                zCut_check,
+                                foc_check])
                           ])
     display(output)
     
